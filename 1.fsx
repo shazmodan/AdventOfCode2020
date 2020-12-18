@@ -1,26 +1,15 @@
-// let numbers = 
-//     [
-//         1721
-//         979
-//         366
-//         299
-//         675
-//         1456
-//     ]
-
 let numbers = 
     System.IO.File.ReadLines("1.txt")
     |> Seq.map (int)
     |> Seq.toList
 
-let pairs (lst : 'a list) =
-    match lst with
+let rec pairs (numbers: int list) : (int * int) list =
+    match numbers with
     | [] -> []
-    | [x] -> []
-    | xs ->
-        xs
-        |> List.splitAt (lst.Length / 2)
-        |> fun (lst1, lst2) -> List.allPairs lst1 lst2
+    | head :: tail ->
+        tail 
+        |> List.map (fun number -> (head, number))
+        |> (fun tuples -> tuples @ pairs tail)
 
 
 numbers
