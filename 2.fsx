@@ -34,9 +34,18 @@ let isValidPassword (min: int) (max: int) (char: char) (password: string) : bool
     
     occurances >= min && occurances <= max
 
+let isValidPosition (min: int) (max: int) (char: char) (password: string) : bool =
+    (password.[min-1] = char) <> (password.[max-1] = char)
+
 
 input
 |> inputToQuadruple
 |> List.map (fun (min, max, char, password) -> isValidPassword min max char password)
+|> List.filter id
+|> List.length
+
+input
+|> inputToQuadruple
+|> List.map (fun (min, max, char, password) -> isValidPosition min max char password)
 |> List.filter id
 |> List.length
